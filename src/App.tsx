@@ -97,6 +97,7 @@ const codeLines = [
   ]},
 ];
 
+
 const promptText = `You are a document classification specialist 
 for a home infusion pharmacy. 
 
@@ -185,7 +186,7 @@ export default function App() {
                     <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 3 }}>
                       <div style={{ width: 8, height: 8, borderRadius: 2, background: section.color, flexShrink: 0 }} />
                       <span style={{ fontSize: 9, fontWeight: 700, color: section.color, textTransform: "uppercase", letterSpacing: 0.8 }}>
-                        {section.section}: {sectionLabels[section.section]}
+                        {section.section}: {sectionLabels[section.section as keyof typeof sectionLabels]}
                       </span>
                     </div>
                     {section.lines.map((line, li) => (
