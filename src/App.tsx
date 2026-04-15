@@ -63,18 +63,19 @@ const EmergencyBanner = () => (
     background: COLORS.emergencyLight,
     border: `1.5px solid ${COLORS.emergencyBorder}`,
     borderRadius: 10,
-    padding: "10px 16px",
+    padding: "12px 16px",
     display: "flex",
-    alignItems: "center",
-    gap: 10,
+    alignItems: "flex-start",
+    gap: 12,
     marginTop: 20,
+    textAlign: "left"
   }}>
     <span style={{ fontSize: 20 }}>🚨</span>
     <div>
       <div style={{ fontWeight: 700, color: COLORS.emergency, fontSize: 13, lineHeight: 1.3 }}>
         Stop & Call 911 if you experience:
       </div>
-      <div style={{ color: COLORS.emergency, fontSize: 12, lineHeight: 1.4, marginTop: 2 }}>
+      <div style={{ color: COLORS.emergency, fontSize: 12, lineHeight: 1.4, marginTop: 4 }}>
         Trouble breathing · Swelling of lips, tongue, or throat · Chest tightness or wheezing · Itching, flushing, or dizziness
       </div>
     </div>
@@ -94,10 +95,11 @@ const CheckItem = ({ text, checked, onToggle, sub }: CheckItemProps) => (
     style={{
       display: "flex",
       gap: 12,
-      padding: "12px 0",
+      padding: "14px 0",
       borderBottom: `1px solid ${COLORS.border}`,
       cursor: "pointer",
       userSelect: "none",
+      textAlign: "left"
     }}
   >
     <div style={{
@@ -128,21 +130,26 @@ interface DetailToggleProps {
 const DetailToggle = ({ label, children }: DetailToggleProps) => {
   const [open, setOpen] = useState(false);
   return (
-    <div style={{ marginTop: 10 }}>
+    <div style={{ marginTop: 12, textAlign: "left" }}>
       <div
         onClick={() => setOpen(!open)}
         style={{
-          fontSize: 12.5, color: COLORS.primary, cursor: "pointer",
-          fontWeight: 600, userSelect: "none", display: "flex", alignItems: "center", gap: 4,
+          fontSize: 13, color: COLORS.primary, cursor: "pointer",
+          fontWeight: 600, userSelect: "none", display: "flex", alignItems: "center", gap: 6,
         }}
       >
-        <span style={{ transform: open ? "rotate(90deg)" : "rotate(0deg)", transition: "transform 0.2s", display: "inline-block" }}>▸</span>
+        <span style={{ 
+          transform: open ? "rotate(90deg)" : "rotate(0deg)", 
+          transition: "transform 0.2s", 
+          display: "inline-block",
+          fontSize: 10
+        }}>▶</span>
         {label}
       </div>
       {open && (
         <div style={{
-          fontSize: 13, color: COLORS.textMed, marginTop: 6,
-          padding: "10px 14px", background: COLORS.primaryLight, borderRadius: 8, lineHeight: 1.5,
+          fontSize: 13, color: COLORS.textMed, marginTop: 8,
+          padding: "12px 16px", background: COLORS.primaryLight, borderRadius: 8, lineHeight: 1.5,
         }}>
           {children}
         </div>
@@ -152,11 +159,13 @@ const DetailToggle = ({ label, children }: DetailToggleProps) => {
 };
 
 const StepBadge = ({ color, label }: { color: string; label: string }) => (
-  <span style={{
-    display: "inline-block", fontSize: 10.5, fontWeight: 700,
-    color: color, background: color + "18", padding: "3px 10px",
-    borderRadius: 20, letterSpacing: 0.5, textTransform: "uppercase",
-  }}>{label}</span>
+  <div style={{ textAlign: "left", marginBottom: 12 }}>
+    <span style={{
+      display: "inline-block", fontSize: 10.5, fontWeight: 700,
+      color: color, background: color + "18", padding: "4px 12px",
+      borderRadius: 20, letterSpacing: 0.5, textTransform: "uppercase",
+    }}>{label}</span>
+  </div>
 );
 
 // --- Data ---
@@ -340,7 +349,7 @@ export default function App() {
     switch (card.type) {
       case "welcome":
         return (
-          <div>
+          <div style={{ textAlign: "left" }}>
             <h1 style={{ fontSize: 24, fontWeight: 700, color: COLORS.textDark, margin: "0 0 14px" }}>{card.title}</h1>
             <p style={{ fontSize: 16, color: COLORS.textMed, lineHeight: 1.6 }}>{card.body}</p>
             <div style={{ background: COLORS.primaryLight, borderRadius: 10, padding: "14px 16px" }}>
@@ -352,9 +361,9 @@ export default function App() {
 
       case "checklist":
         return (
-          <div>
-            <h2 style={{ fontSize: 21, fontWeight: 700 }}>{card.title}</h2>
-            <p style={{ fontSize: 14, color: COLORS.textMed }}>{card.intro}</p>
+          <div style={{ textAlign: "left" }}>
+            <h2 style={{ fontSize: 21, fontWeight: 700, margin: "0 0 8px" }}>{card.title}</h2>
+            <p style={{ fontSize: 14, color: COLORS.textMed, marginBottom: 16 }}>{card.intro}</p>
             {card.items?.map((item, i) => (
               <CheckItem
                 key={i}
@@ -366,7 +375,7 @@ export default function App() {
             ))}
             {card.warning && (
               <div style={{ background: COLORS.emergencyLight, border: `1px solid ${COLORS.emergencyBorder}`, padding: 12, borderRadius: 10, marginTop: 15 }}>
-                <p style={{ color: COLORS.emergency, margin: 0, fontSize: 13 }}>{card.warning}</p>
+                <p style={{ color: COLORS.emergency, margin: 0, fontSize: 13, lineHeight: 1.4 }}>{card.warning}</p>
               </div>
             )}
           </div>
@@ -374,26 +383,39 @@ export default function App() {
 
       case "info":
         return (
-          <div>
+          <div style={{ textAlign: "left" }}>
             <h2 style={{ fontSize: 21, fontWeight: 700 }}>{card.title}</h2>
+            <p style={{ fontSize: 15, color: COLORS.textMed, lineHeight: 1.5 }}>{card.body}</p>
             <div style={{ display: "flex", flexDirection: "column", gap: 10, marginTop: 15 }}>
               {[
-                { l: "S", t: "Saline", c: COLORS.saline },
-                { l: "A", t: "Administer", c: COLORS.med },
-                { l: "S", t: "Saline", c: COLORS.saline },
-                { l: "H", t: "Heparin", c: COLORS.heparin },
+                { l: "S", t: "Saline Flush", c: COLORS.saline },
+                { l: "A", t: "Administer Medication", c: COLORS.med },
+                { l: "S", t: "Saline Flush", c: COLORS.saline },
+                { l: "H", t: "Heparin Lock", c: COLORS.heparin },
               ].map((s, i) => (
-                <div key={i} style={{ display: "flex", alignItems: "center", gap: 12, padding: 10, background: s.c + "10", borderRadius: 8 }}>
-                  <b style={{ color: s.c, fontSize: 20 }}>{s.l}</b>
-                  <span style={{ fontSize: 14, fontWeight: 600 }}>{s.t}</span>
+                <div key={i} style={{ display: "flex", alignItems: "center", gap: 14, padding: "12px 16px", background: s.c + "10", borderRadius: 10 }}>
+                  <b style={{ color: s.c, fontSize: 22, width: 24 }}>{s.l}</b>
+                  <span style={{ fontSize: 15, fontWeight: 600, color: COLORS.textDark }}>{s.t}</span>
                 </div>
               ))}
             </div>
-            <div style={{ marginTop: 20 }}>
-              <p style={{ fontSize: 14, fontWeight: 600 }}>Does your plan include heparin?</p>
-              <div style={{ display: "flex", gap: 10 }}>
-                <button onClick={() => setHeparinNeeded(true)} style={{ flex: 1, padding: 10, borderRadius: 8, background: heparinNeeded === true ? COLORS.primaryLight : "#fff" }}>Yes</button>
-                <button onClick={() => setHeparinNeeded(false)} style={{ flex: 1, padding: 10, borderRadius: 8, background: heparinNeeded === false ? COLORS.primaryLight : "#fff" }}>No</button>
+            <div style={{ marginTop: 24, padding: "16px", background: COLORS.bg, borderRadius: 12 }}>
+              <p style={{ fontSize: 14, fontWeight: 700, margin: "0 0 12px", color: COLORS.textDark }}>Does your plan include heparin?</p>
+              <div style={{ display: "flex", gap: 12 }}>
+                <button 
+                  onClick={() => setHeparinNeeded(true)} 
+                  style={{ 
+                    flex: 1, padding: "10px", borderRadius: 8, cursor: "pointer", border: `1.5px solid ${heparinNeeded === true ? COLORS.primary : COLORS.border}`,
+                    background: heparinNeeded === true ? COLORS.primaryLight : "#fff", fontWeight: 600, color: heparinNeeded === true ? COLORS.primary : COLORS.textMed
+                  }}
+                >Yes</button>
+                <button 
+                  onClick={() => setHeparinNeeded(false)} 
+                  style={{ 
+                    flex: 1, padding: "10px", borderRadius: 8, cursor: "pointer", border: `1.5px solid ${heparinNeeded === false ? COLORS.primary : COLORS.border}`,
+                    background: heparinNeeded === false ? COLORS.primaryLight : "#fff", fontWeight: 600, color: heparinNeeded === false ? COLORS.primary : COLORS.textMed
+                  }}
+                >No</button>
               </div>
             </div>
           </div>
@@ -402,16 +424,15 @@ export default function App() {
       case "step":
         const pc = phaseColors[card.phase || "saline"];
         return (
-          <div>
+          <div style={{ textAlign: "left" }}>
             <StepBadge color={pc.color} label={card.phaseLabel || ""} />
-            <h2 style={{ fontSize: 21, fontWeight: 700, marginTop: 10 }}>{card.title}</h2>
-            <ol style={{ paddingLeft: 20 }}>
+            <h2 style={{ fontSize: 21, fontWeight: 700, marginTop: 0, marginBottom: 16 }}>{card.title}</h2>
+            <ol style={{ paddingLeft: 20, margin: "0 0 20px" }}>
               {card.steps?.map((s, i) => (
-                <li key={i} style={{ marginBottom: 8, fontSize: 15 }}>{s}</li>
+                <li key={i} style={{ marginBottom: 12, fontSize: 15, color: COLORS.textDark, lineHeight: 1.5 }}>{s}</li>
               ))}
             </ol>
             
-            {/* Using the DetailToggle here fixes the TS6133 error */}
             {card.detail && (
               <DetailToggle label={card.detail.label}>
                 {card.detail.text}
@@ -421,13 +442,17 @@ export default function App() {
             {card.watch && (
               <div style={{ 
                 background: card.watchSeverity === 'critical' ? COLORS.emergencyLight : '#fffbe6', 
-                padding: 10, 
-                borderRadius: 8,
-                marginTop: 15 
+                padding: "12px 16px", 
+                borderRadius: 10,
+                marginTop: 20,
+                border: card.watchSeverity === 'critical' ? `1px solid ${COLORS.emergencyBorder}` : '1px solid #ffe58f'
               }}>
-                <small style={{ color: card.watchSeverity === 'critical' ? COLORS.emergency : '#856404', fontWeight: 600 }}>
-                   {card.watchSeverity === 'critical' ? "🚨 " : "⚠️ "}{card.watch}
-                </small>
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <span style={{ fontSize: 16 }}>{card.watchSeverity === 'critical' ? "🚨" : "⚠️"}</span>
+                  <small style={{ color: card.watchSeverity === 'critical' ? COLORS.emergency : '#856404', fontWeight: 600, lineHeight: 1.4, fontSize: 13 }}>
+                    {card.watch}
+                  </small>
+                </div>
               </div>
             )}
           </div>
@@ -435,13 +460,30 @@ export default function App() {
 
       case "complete":
         return (
-          <div style={{ textAlign: "center" }}>
-            <h2>{card.title}</h2>
-            <p>{card.body}</p>
-            <ul style={{ textAlign: "left" }}>
-              {card.reminders?.map((r, i) => <li key={i} style={{ fontSize: 14, marginBottom: 5 }}>{r}</li>)}
-            </ul>
-            <button onClick={() => { setCurrentCard(0); setChecks({}); }} style={{ padding: "10px 20px", marginTop: 20 }}>Start Over</button>
+          <div style={{ textAlign: "left" }}>
+            <div style={{ textAlign: "center", marginBottom: 20 }}>
+              <span style={{ fontSize: 48 }}>🎉</span>
+              <h2 style={{ fontSize: 24, fontWeight: 700, marginTop: 10 }}>{card.title}</h2>
+              <p style={{ color: COLORS.textMed, fontSize: 16 }}>{card.body}</p>
+            </div>
+            
+            <div style={{ background: COLORS.bg, padding: 16, borderRadius: 12 }}>
+              <h4 style={{ margin: "0 0 10px", fontSize: 14, color: COLORS.textDark }}>Quick Reminders:</h4>
+              <ul style={{ paddingLeft: 20, margin: 0 }}>
+                {card.reminders?.map((r, i) => (
+                  <li key={i} style={{ fontSize: 14, marginBottom: 8, color: COLORS.textMed, lineHeight: 1.4 }}>{r}</li>
+                ))}
+              </ul>
+            </div>
+            
+            <button 
+              onClick={() => { setCurrentCard(0); setChecks({}); }} 
+              style={{ 
+                width: "100%", padding: "14px", marginTop: 24, borderRadius: 10, 
+                background: "#fff", border: `2px solid ${COLORS.primary}`, 
+                color: COLORS.primary, fontWeight: 700, cursor: "pointer" 
+              }}
+            >Start Over</button>
           </div>
         );
 
@@ -451,21 +493,38 @@ export default function App() {
   };
 
   return (
-    <div style={{ background: COLORS.bg, minHeight: "100vh", padding: "20px 16px", display: "flex", flexDirection: "column", alignItems: "center", fontFamily: "sans-serif" }}>
+    <div style={{ background: COLORS.bg, minHeight: "100vh", padding: "24px 16px", display: "flex", flexDirection: "column", alignItems: "center", fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" }}>
       <div style={{ width: "100%", maxWidth: 480 }}>
-        <div style={{ height: 4, background: COLORS.border, borderRadius: 4 }}>
-          <div style={{ height: "100%", width: `${progress}%`, background: COLORS.primary, transition: "0.4s" }} />
+        <div style={{ height: 6, background: COLORS.border, borderRadius: 10, overflow: "hidden" }}>
+          <div style={{ height: "100%", width: `${progress}%`, background: COLORS.primary, transition: "0.4s ease-out" }} />
         </div>
-        <div style={{ textAlign: "center", fontSize: 12, marginTop: 8 }}>{currentCard + 1} of {totalCards}</div>
+        <div style={{ textAlign: "center", fontSize: 12, marginTop: 10, color: COLORS.textLight, fontWeight: 600 }}>
+          STEP {currentCard + 1} OF {totalCards}
+        </div>
       </div>
 
-      <div style={{ background: "#fff", borderRadius: 16, padding: 24, maxWidth: 480, width: "100%", marginTop: 20, boxShadow: "0 4px 12px rgba(0,0,0,0.05)" }}>
+      <div style={{ background: "#fff", borderRadius: 20, padding: "28px 24px", maxWidth: 480, width: "100%", marginTop: 24, boxShadow: "0 10px 25px rgba(0,0,0,0.03)", border: `1px solid ${COLORS.border}` }}>
         {renderCard()}
       </div>
 
-      <div style={{ display: "flex", gap: 12, width: "100%", maxWidth: 480, marginTop: 20 }}>
-        <button onClick={prev} disabled={currentCard === 0} style={{ flex: 1, padding: 14, borderRadius: 10 }}>Back</button>
-        <button onClick={next} disabled={currentCard === totalCards - 1} style={{ flex: 2, padding: 14, borderRadius: 10, background: COLORS.primary, color: "#fff" }}>Continue</button>
+      <div style={{ display: "flex", gap: 12, width: "100%", maxWidth: 480, marginTop: 24 }}>
+        <button 
+          onClick={prev} 
+          disabled={currentCard === 0} 
+          style={{ 
+            flex: 1, padding: "16px", borderRadius: 12, border: "none", background: COLORS.border, 
+            color: COLORS.textMed, fontWeight: 700, cursor: currentCard === 0 ? "default" : "pointer",
+            opacity: currentCard === 0 ? 0.5 : 1
+          }}
+        >Back</button>
+        <button 
+          onClick={next} 
+          disabled={currentCard === totalCards - 1} 
+          style={{ 
+            flex: 2, padding: "16px", borderRadius: 12, border: "none", background: COLORS.primary, 
+            color: "#fff", fontWeight: 700, cursor: "pointer", boxShadow: "0 4px 12px rgba(27, 107, 147, 0.2)"
+          }}
+        >Continue</button>
       </div>
     </div>
   );
